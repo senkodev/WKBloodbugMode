@@ -1,0 +1,10 @@
+{
+  "name": "BloodbugMode",
+  "version_number": "1.0.0",
+  "website_url": "https://github.com/senkodev/WKBloodbugMode",
+  "description": "Adds a Bloodbug binding. Fly on limited stamina, land on walls and ceilings to rest, charge and feed on denizens, float on water, see through a bug's eye. Hitting things at speed hurts.",
+  "dependencies": [
+    "BepInEx-BepInExPack-5.4.2305",
+    "CiCisMods-CiCisTrinketAndBindingFramework-2.2.6"
+  ]
+}
