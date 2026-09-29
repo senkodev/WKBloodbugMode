@@ -8,11 +8,11 @@ Needs [CiCi's Trinket & Binding Framework](https://thunderstore.io/c/white-knuck
 
 I have spent countless hours researching things about flies, like about how they see and hear and overall perceive the world, and tried my best to replicate the effects through this mod.
 
-Suggestions and bug reports are welcome through Issues in the GitHub repository and Thunderstore mod listing!
+Suggestions and bug reports are welcome through **Issues** in the GitHub repository!
 
 ## Installing
 
-With a mod manager like r2modman:
+With a Mod Manager like r2modman:
 
 1. Pick White Knuckle and a profile
 2. Search for Bloodbug Mode in the online mods and install it. BepInEx and the framework come along on their own, otherwise install them as well
@@ -82,19 +82,19 @@ You can also get the perk in the middle of a run with the console command `addpe
 
 ## Building
 
-You need the .NET SDK and the game with [BepInEx](https://old.thunderstore.io/c/white-knuckle/p/BepInEx/BepInExPack/) and [CiCisTrinketAndBindingFramework](https://old.thunderstore.io/c/white-knuckle/p/CiCisMods/CiCisTrinketAndBindingFramework/) installed.
+You will need the .NET SDK and the game with [BepInEx](https://old.thunderstore.io/c/white-knuckle/p/BepInEx/BepInExPack/) and [CiCisTrinketAndBindingFramework](https://old.thunderstore.io/c/white-knuckle/p/CiCisMods/CiCisTrinketAndBindingFramework/) **already installed**.
 
 ```
 dotnet build src/BloodbugMode.csproj -c Release
 ```
 
-This also copies the mod into your r2modman profile. If your game or profile is somewhere else, copy `LocalPaths.props.example` to `LocalPaths.props` and put your paths in there. Add `-p:Deploy=false` if you only want to build the mod.
+This also copies the mod into your r2modman profile. If your game and/or profile are somewhere else, copy `LocalPaths.props.example` to `LocalPaths.props` and put your paths in there. Add `-p:Deploy=false` if you only want to build the mod.
 
-`tools/package.ps1` makes the zip.
+`tools/package.ps1` makes the zip package for the Thunderstore listing.
 
 ## Credits
 
-This mod is dedicated to Sckurge, who you can find on [Twitch](https://www.twitch.tv/sckurge) and [YouTube](https://www.youtube.com/@SckurgeWK).
+This mod is dedicated to Sckurge, who you can find on [Twitch](https://www.twitch.tv/sckurge) and [YouTube](https://www.youtube.com/@SckurgeWK)!
 
 - Dark Machine Games for White Knuckle
 - CiCi for the [Trinket & Binding Framework](https://thunderstore.io/c/white-knuckle/p/CiCisMods/CiCisTrinketAndBindingFramework/)
