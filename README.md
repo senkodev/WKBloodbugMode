@@ -10,6 +10,10 @@ I have spent countless hours researching things about flies, like about how they
 
 Suggestions and bug reports are welcome through **Issues** in the GitHub repository!
 
+## Showcase
+
+https://github.com/user-attachments/assets/696da866-aa4a-494a-b858-7502df89421b
+
 ## Installing
 
 With a Mod Manager like r2modman:
