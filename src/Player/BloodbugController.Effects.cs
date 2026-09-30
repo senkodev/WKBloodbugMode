@@ -7,7 +7,7 @@ namespace BloodbugMode
     {
         private const float SputterBelow = 0.2f;
         private const float BankSpeed = 6f;
-        private const float BankAngle = 6f;
+        private const float BankAngle = 10f;
         private const float HealedVolume = 0.6f;
 
         private readonly HandCosmeticSwap bugHands = new HandCosmeticSwap();

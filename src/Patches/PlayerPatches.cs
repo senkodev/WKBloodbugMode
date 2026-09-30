@@ -58,6 +58,18 @@ namespace BloodbugMode
         }
     }
 
+    [HarmonyPatch(typeof(ENT_Player), nameof(ENT_Player.GetCurrentMaxFallDistance))]
+    internal static class FallDistancePatch
+    {
+        private static void Postfix(ENT_Player __instance, ref float __result)
+        {
+            if (BloodbugController.IsBloodbug(__instance))
+            {
+                __result *= Balance.FallDistance;
+            }
+        }
+    }
+
     // the game carries props by their mass, so half the strength is the same as twice the weight
     [HarmonyPatch(typeof(ENT_Player), nameof(ENT_Player.GrabPropUpdate))]
     internal static class PropCarryPatch

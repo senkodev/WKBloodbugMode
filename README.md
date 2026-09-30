@@ -40,6 +40,7 @@ Then start a new run and pick Bloodbug Mode from the bindings.
 - Hold `V` next to a body to drink from it. Also works on alive denizens. That gives you stamina and a bit of health and fills the hunger bar.
 - Injectors make you fly faster while they last and pills give you infinite stamina for 35 seconds
 - You float on water for a few seconds and can take off from it
+- Falling only hurts from two times the usual height
 - You can still grab the white markers from the `Remote` artifact
 - You can't crush roaches with your weight (just like in Roach Mode)
 - Other Bloodbugs leave you alone
@@ -49,8 +50,8 @@ Additionally the Mother treats you as a relative, the same way she does in Roach
 ## Debuffs
 
 - You start with the Half Inventory and Survival Mode bindings
-- You are 35% slower on foot
-- You fly slower when your hunger bar is low, down to 60% of your speed when the hunger bar is empty
+- You are 30% slower on foot
+- You fly slower when your hunger bar is low, down to 75% of your speed when the hunger bar is empty
 - You carry boxes and other props with half the strength, so they feel twice as heavy. Planks are excluded for balance.
 
 Additionally you can't:
