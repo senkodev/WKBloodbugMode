@@ -7,6 +7,7 @@ namespace BloodbugMode
     {
         public const string HalfInventoryId = "Perk_Binding_HalfInventory";
         public const string SurvivalId = "Perk_Binding_Survival";
+        public const string MoonRocksId = "Perk_Trinket_MoonRock";
         // public const string CarnalBloodlustId = "Perk_CarnalBloodlust";
 
         private const string BloodbugPrefabName = "Denizen_Bloodbug";

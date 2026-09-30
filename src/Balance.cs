@@ -38,6 +38,9 @@ namespace BloodbugMode
         public const float PerchRegen = 14f;
         public const float FoodStamina = 40f;
 
+        // 25% less stamina drain with the moon rocks trinket in inventory
+        public const float MoonRocksDrain = 0.75f;
+
         // by default the game's effect runs for 100 seconds slowly fading out by the end
         // balanced out to 35 seconds not to make the pills way too OP
         public const float PillSeconds = 35f;

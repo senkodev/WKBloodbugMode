@@ -13,6 +13,7 @@ namespace BloodbugMode
         private float injuryTimer;
         private Perk wetWings;
         private Perk injury;
+        private Perk moonRocks;
 
         public int Injuries { get; private set; }
 
@@ -106,6 +107,7 @@ namespace BloodbugMode
             givenPerks.Clear();
             wetWings = null;
             injury = null;
+            moonRocks = null;
             hunger = null;
             wetTimer = 0f;
             injuryTimer = 0f;
@@ -122,6 +124,7 @@ namespace BloodbugMode
             wetWings = player.GetPerk(BloodbugContent.WetWingsId);
             injury = player.GetPerk(BloodbugContent.WingInjuryId);
             Injuries = injury != null ? injury.GetStackAmount() : 0;
+            moonRocks = player.GetPerk(GameAssets.MoonRocksId);
 
             // foreach (Perk perk in new[] { GameAssets.HalfInventory, GameAssets.Survival, GameAssets.CarnalBloodlust })
             foreach (Perk perk in new[] { GameAssets.HalfInventory, GameAssets.Survival })

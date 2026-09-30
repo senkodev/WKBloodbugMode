@@ -39,6 +39,7 @@ Then start a new run and pick Bloodbug Mode from the bindings.
 - Press `V` while flying to charge at a denizen
 - Hold `V` next to a body to drink from it. Also works on alive denizens. That gives you stamina and a bit of health and fills the hunger bar.
 - Injectors make you fly faster while they last and pills give you infinite stamina for 35 seconds
+- The Moon Rocks trinket makes flying drain 25% less of the flight stamina
 - You float on water for a few seconds and can take off from it
 - Falling only hurts from two times the usual height
 - You can still grab the white markers from the `Remote` artifact

@@ -222,6 +222,10 @@ namespace BloodbugMode
                 {
                     drain *= Balance.WetDrainMultiplier;
                 }
+                if (moonRocks != null)
+                {
+                    drain *= Balance.MoonRocksDrain;
+                }
                 Stamina = Mathf.Max(Stamina - drain * dt, 0f);
             }
         }
