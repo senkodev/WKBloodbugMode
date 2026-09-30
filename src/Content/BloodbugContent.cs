@@ -50,13 +50,26 @@ namespace BloodbugMode
             }
         }
 
+        public static void ApplyBiteKey()
+        {
+            string key = Plugin.BiteKey.Value.ToString();
+            Perk.description = $"(+) You can fly and rest on walls and ceilings.\n(+) Press {key} to charge at a denizen, hold {key} to feed on it.\n(+) Bloodbugs leave you alone.\n(-) You are short-sighted, color blind and hard of hearing.\n(-) You are small, slow on foot and crashing into things hurts.\n(-) No using hammers, pitons, rebars, handholds or computers.";
+
+            ENT_Player player = ENT_Player.playerObject;
+            Perk held = player != null ? player.GetPerk(PerkId) : null;
+            if (held != null)
+            {
+                held.description = Perk.description;
+            }
+        }
+
         private static void Create()
         {
             Icon = ModFiles.LoadSprite("binding_icon.png", "Binding_Icon_Bloodbug");
             Pixel = ModFiles.WhitePixel();
 
             Perk = NewPerk(PerkId, "Bloodbug Mode", Perk.PerkType.binding, Icon);
-            Perk.description = "(+) You can fly and rest on walls and ceilings.\n(+) Press V to charge at a denizen, hold V to feed on it.\n(+) Bloodbugs leave you alone.\n(-) You are short-sighted, color blind and hard of hearing.\n(-) You are small, slow on foot and crashing into things hurts.\n(-) No using hammers, pitons, rebars, handholds or computers.";
+            ApplyBiteKey();
             Perk.flavorText = "bzzzzzz";
             Perk.tags = new List<string> { "binding" };
             Perk.playerTag = new List<string> { BloodbugKin.Tag };

@@ -35,6 +35,7 @@ namespace BloodbugMode
             Log = Logger;
             BindConfig();
             BloodbugContent.RegisterBinding();
+            Config.SettingChanged += (sender, args) => BloodbugContent.ApplyBiteKey();
 
             // SceneManager.sceneLoaded += OnSceneLoaded;
 
@@ -48,9 +49,9 @@ namespace BloodbugMode
         {
             BiteKey = Config.Bind("Bite", "BiteKey", KeyCode.V, "Hold near a denizen to feed, press in flight to charge. You must use a key that the game doesn't, you get a warning in game otherwise.");
             OutlinePrey = Config.Bind("Bite", "OutlinePrey", true, "Outline dead bodies that still have blood, gets paler when in reach.");
-            BugHands = Config.Bind("Body", "BugHands", true, "Whether to replace the climber's hands with Bloodbug forelegs.");
+            BugHands = Config.Bind("Body", "BugHands", true, "Whether to replace the climber's hands with Bloodbug's forelegs.");
             BloodbugVoice = Config.Bind("Body", "BloodbugVoice", true, "Whether to use the Bloodbug's hurt and death sounds instead of the climber's.");
-            MotherKinEnabled = Config.Bind("Binding", "MotherKin", true, "Whether the Mother treats you as a relative like she does in Roach Mode with a Bloodbug ending of your own.");
+            MotherKinEnabled = Config.Bind("Binding", "MotherKin", true, "Whether the Mother treats you as a relative like she does in Roach Mode, with a Bloodbug ending of your own.");
 
             BuzzVolume = Slider("BuzzVolume", 0.25f, "Volume of the wing buzz.");
             CameraBanking = Config.Bind("Presentation", "CameraBanking", true, "Tilt the view when flying sideways.");
