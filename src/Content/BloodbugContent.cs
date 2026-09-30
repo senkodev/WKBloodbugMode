@@ -31,7 +31,7 @@ namespace BloodbugMode
             TrinketRegistry.RegisterBinding(
                 BindingId,
                 "Bloodbug Mode",
-                "You are a <color=red>Bloodbug</color>.\nFly on limited stamina and land on walls to rest. Don't hit them too fast.",
+                "You were unfortunate enough to become a <color=red>Bloodbug</color>.\nFly on limited stamina, rest on walls and charge at denizens.\nComes with Half Inventory and Survival Mode.",
                 scoreMultiplierBonus: Balance.ScoreMultiplierBonus,
                 icon: Icon,
                 perksToGrantFactory: () => new List<Perk> { Perk });
@@ -56,7 +56,7 @@ namespace BloodbugMode
             Pixel = ModFiles.WhitePixel();
 
             Perk = NewPerk(PerkId, "Bloodbug Mode", Perk.PerkType.binding, Icon);
-            Perk.description = "(+) You fly, for as long as your wings hold out.\n(+) You can land on a wall or ceiling to rest.\n(+) V to charge at a denizen or to feed on what is in reach.\n(+) Bloodbugs are friendly.\n(-) You are short-sighted and blind to red (protanopia).\n(-) You are small and slow on foot. Hitting anything at speed hurts.\n(-) You can't use the hammer, climb on handholds, throw rebar and crush grubs.\n(-) You can't place pitons or use computers.";
+            Perk.description = "(+) You can fly and rest on walls and ceilings.\n(+) Press V to charge at a denizen, hold V to feed on it.\n(+) Bloodbugs leave you alone.\n(-) You are short-sighted, color blind and hard of hearing.\n(-) You are small, slow on foot and crashing into things hurts.\n(-) No using hammers, pitons, rebars, handholds or computers.";
             Perk.flavorText = "bzzzzzz";
             Perk.tags = new List<string> { "binding" };
             Perk.playerTag = new List<string> { BloodbugKin.Tag };
@@ -84,9 +84,9 @@ namespace BloodbugMode
             database.id = DatabaseId;
             database.perkAssets.AddRange(new[] { Perk, LightBody, WetWings, WingInjury });
 
-            LightBody.description = $"(-) You weigh next to nothing. Blows, blasts, fans and steam throw you {Percent(Balance.LightBodyKnockback - 1f)}% further.";
-            WetWings.description = $"(-) Your wings are soaked. Flying costs {Percent(Balance.WetDrainMultiplier - 1f)}% more stamina until they dry out.";
-            WingInjury.description = $"(-) A hard crash has torn your wings. Each injury takes {Percent(Balance.InjuryStaminaLoss)}% off your flight stamina until it heals.";
+            LightBody.description = $"(-) You weigh next to nothing.\nBlows, blasts, fans and steam throw you {Percent(Balance.LightBodyKnockback - 1f)}% further.";
+            WetWings.description = $"(-) Your wings are soaked.\nFlying costs {Percent(Balance.WetDrainMultiplier - 1f)}% more stamina until they dry out.";
+            WingInjury.description = $"(-) A hard crash has torn one of your wings.\nEach injury takes {Percent(Balance.InjuryStaminaLoss)}% off your flight stamina until it heals.";
             WingInjury.stackMax = Balance.MaxInjuries;
         }
 
