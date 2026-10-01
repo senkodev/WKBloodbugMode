@@ -48,7 +48,6 @@ namespace BloodbugMode
                 buzz.spatialBlend = 0f;
                 buzz.volume = 0f;
                 buzz.outputAudioMixerGroup = AudioManager.instance.gameMixer;
-                buzz.bypassListenerEffects = true;
             }
         }
 

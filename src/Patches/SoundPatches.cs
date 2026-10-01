@@ -7,8 +7,11 @@ namespace BloodbugMode
     [HarmonyPatch(typeof(AudioManager), "GetPooledAudioSource")]
     internal static class PooledSoundPatch
     {
+        internal static AudioSource Last;
+
         private static void Postfix(AudioSource __result)
         {
+            Last = __result;
             if (__result != null)
             {
                 NearHearing.Pooled(__result);
@@ -21,17 +24,17 @@ namespace BloodbugMode
     internal static class SoundAtPlacePatch
     {
         // https://harmony.pardeike.net/articles/patching-injections.html
-        private static void Prefix(Vector3 position, ref float volume, float spatial, ref bool bypass)
+        private static void Prefix(Vector3 position, ref float volume, float spatial)
         {
-            if (!NearHearing.On) return;
-            if (spatial > 0f)
+            if (NearHearing.On && spatial > 0f)
             {
                 volume *= NearHearing.Fade(position);
             }
-            else
-            {
-                bypass = true;
-            }
+        }
+
+        private static void Postfix(Vector3 position, float spatial)
+        {
+            NearHearing.Played(PooledSoundPatch.Last, position, null, spatial);
         }
     }
 
@@ -39,17 +42,17 @@ namespace BloodbugMode
         typeof(float), typeof(float), typeof(bool), typeof(float), typeof(AudioMixerGroup), typeof(string))]
     internal static class SoundOnThingPatch
     {
-        private static void Prefix(Transform from, ref float volume, float spatial, ref bool bypass)
+        private static void Prefix(Transform from, ref float volume, float spatial)
         {
-            if (!NearHearing.On) return;
-            if (spatial > 0f)
+            if (NearHearing.On && spatial > 0f)
             {
                 volume *= NearHearing.Fade(from.position);
             }
-            else
-            {
-                bypass = true;
-            }
+        }
+
+        private static void Postfix(Transform from, float spatial)
+        {
+            NearHearing.Played(PooledSoundPatch.Last, from.position, from, spatial);
         }
     }
 }

@@ -7,8 +7,6 @@ namespace BloodbugMode
     {
         internal static int activeForceZones;
 
-        private readonly List<string> givenPerks = new List<string>();
-
         private float wetTimer;
         private float injuryTimer;
         private Perk wetWings;
@@ -21,7 +19,8 @@ namespace BloodbugMode
 
         internal static float KnockbackMultiplier(ENT_Player player, string source)
         {
-            bool external = !string.IsNullOrEmpty(source) || activeForceZones > 0;
+            if (activeForceZones > 0) return 1f;
+            bool external = !string.IsNullOrEmpty(source);
             return external && IsBloodbug(player) ? Balance.LightBodyKnockback : 1f;
         }
 
@@ -99,12 +98,6 @@ namespace BloodbugMode
             {
                 player.RemovePerk(id);
             }
-            foreach (string id in givenPerks)
-            {
-                player.RemovePerk(id);
-            }
-
-            givenPerks.Clear();
             wetWings = null;
             injury = null;
             moonRocks = null;
@@ -126,15 +119,6 @@ namespace BloodbugMode
             Injuries = injury != null ? injury.GetStackAmount() : 0;
             moonRocks = player.GetPerk(GameAssets.MoonRocksId);
 
-            // foreach (Perk perk in new[] { GameAssets.HalfInventory, GameAssets.Survival, GameAssets.CarnalBloodlust })
-            foreach (Perk perk in new[] { GameAssets.HalfInventory, GameAssets.Survival })
-            {
-                if (perk != null && !player.HasPerk(perk.id))
-                {
-                    player.AddPerk(perk);
-                    givenPerks.Add(perk.id);
-                }
-            }
             hunger = FindHunger();
         }
     }

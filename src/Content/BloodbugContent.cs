@@ -14,6 +14,7 @@ namespace BloodbugMode
         public const string TrinketName = "Trinket_" + BindingId;
         public const string DatabaseId = "senkodev-bloodbugmode";
         public const string FormBuffId = "senkodev-bloodbugform";
+        private const string CardArtPerkId = "Perk_Binding_HalfInventory";
 
         public static Perk Perk { get; private set; }
         public static Sprite Icon { get; private set; }
@@ -31,13 +32,13 @@ namespace BloodbugMode
             TrinketRegistry.RegisterBinding(
                 BindingId,
                 "Bloodbug Mode",
-                "You were unfortunate enough to become a <color=red>Bloodbug</color>.\nFly on limited stamina, rest on walls and charge at denizens.\nComes with Half Inventory and Survival Mode.",
+                Description(),
                 scoreMultiplierBonus: Balance.ScoreMultiplierBonus,
                 icon: Icon,
                 perksToGrantFactory: () => new List<Perk> { Perk });
             TrinketRegistry.RegisterMutexHub(BindingId, BindingRules.GameRoachBinding);
 
-            NoHammerBindingRegistrar.AddExternalSource(() => Leaderboards.IsBloodbugRun);
+            // NoHammerBindingRegistrar.AddExternalSource(() => Leaderboards.IsBloodbugRun);
         }
 
         public static void Register()
@@ -50,10 +51,16 @@ namespace BloodbugMode
             }
         }
 
+        private static string Description()
+        {
+            return "You were unfortunate enough to become a <color=red>Bloodbug</color>.\nFly on limited stamina, rest on walls and charge at denizens.\nEnable Half Inventory and Survival Mode for the full Bloodbug experience!";
+        }
+
         public static void ApplyBiteKey()
         {
             string key = Plugin.BiteKey.Value.ToString();
-            Perk.description = $"(+) You can fly and rest on walls and ceilings.\n(+) Press {key} to charge at a denizen, hold {key} to feed on it.\n(+) Bloodbugs leave you alone.\n(-) You are short-sighted, color blind and hard of hearing.\n(-) You are small, slow on foot and crashing into things hurts.\n(-) No using hammers, pitons, rebars, handholds or computers.";
+            string banned = Plugin.AllowClimbing.Value ? "hammers, pitons, rebars or computers" : "hammers, pitons, rebars, handholds or computers";
+            Perk.description = $"(+) You can fly and rest on walls and ceilings.\n(+) Press {key} to charge at a denizen, hold {key} to feed on it.\n(+) Bloodbugs leave you alone.\n(-) You are short-sighted, color blind and hard of hearing.\n(-) You are small, slow on foot and crashing into things hurts.\n(-) No using {banned}.";
 
             ENT_Player player = ENT_Player.playerObject;
             Perk held = player != null ? player.GetPerk(PerkId) : null;
@@ -135,7 +142,7 @@ namespace BloodbugMode
 
         private static void UseGameCardArt()
         {
-            Perk source = GameAssets.HalfInventory;
+            Perk source = CL_AssetManager.GetBaseAssetDatabase().perkAssets.Find(perk => perk.id == CardArtPerkId);
             if (source == null) return;
             foreach (Perk perk in new[] { Perk, LightBody, WetWings, WingInjury })
             {

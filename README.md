@@ -36,13 +36,14 @@ Then start a new run and pick Bloodbug Mode from the bindings.
 
 - You can fly. Flying uses a stamina bar that fills up again on the ground and on walls
 - You can land on walls and ceilings and crawl on them, while slowly regaining stamina
-- Press `V` while flying to charge at a denizen
-- Hold `V` next to a body to drink from it. Also works on alive denizens. That gives you stamina and a bit of health and fills the hunger bar.
+- Press `V` while flying to charge at a denizen. The charge also sets off anything a rebar would, like the flowers
+- Hold `V` next to a body to drink from it. Also works on alive denizens. That gives you stamina and a bit of health and fills the hunger bar
+- If a barnacle caught you with its tongue, press `V` to sting the tongue and get free
+- A roach you hold can be eaten. It gives some stamina and fills the hunger bar a little, platinum roaches give more and the ruby the most
 - Injectors make you fly faster while they last and pills give you infinite stamina for 35 seconds
 - The Moon Rocks trinket makes flying drain 25% less of the flight stamina
 - You float on water for a few seconds and can take off from it
 - Falling only hurts from two times the usual height
-- You can still grab the white markers from the `Remote` artifact
 - You can't crush roaches with your weight (just like in Roach Mode)
 - Other Bloodbugs leave you alone
 
@@ -50,18 +51,16 @@ Additionally the Mother treats you as a relative, the same way she does in Roach
 
 ## Debuffs
 
-- You start with the Half Inventory and Survival Mode bindings
+- Pick **Half Inventory** and **Survival Mode** for the full Bloodbug experience!
 - You are 30% slower on foot
 - You fly slower when your hunger bar is low, down to 75% of your speed when the hunger bar is empty
-- You carry boxes and other props with half the strength, so they feel twice as heavy. Planks are excluded for balance.
+- You carry boxes and other props with half the strength, so they feel twice as heavy. Planks and vent covers come off as usual
 
 Additionally you can't:
-- Grab handholds
-- Use hammers. You start without one and the ones in the world are gone
+- Use hammers. You start without one and can't pick one up
 - Throw rebar
 - Place pitons of any kind
 - Use computers
-- Crush grubs
 - Stay underwater for more than 10 seconds
 
 Levers, cranks, buttons, vending machines and the roach trader will still work. If you grab a lever or a crank while flying, you will hang onto it so you don't drift away.
@@ -83,6 +82,8 @@ You can turn this off with `BugHearing` in the config.
 The settings are in `BepInEx/config/senkodev.whiteknuckle.bloodbugmode.cfg`. The file shows up after the first launch. If you have the "Mod Menu" mod installed you can change it all in game too.
 
 The bite key is `V` by default. If you change it to a key the game already uses the mod will warn you.
+
+`AllowClimbing` is on by default. Turn it off and handholds won't be grabbable anymore, you will be able to fly and land on surfaces only.
 
 You can also get the perk in the middle of a run with the console command `addperk Perk_Senkodev_BloodbugForm`.
 

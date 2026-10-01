@@ -111,6 +111,52 @@ namespace BloodbugMode
         }
     }
 
+    [HarmonyPatch(typeof(Item_Object), nameof(Item_Object.CanPickup))]
+    internal static class HammerPickupPatch
+    {
+        private static void Postfix(Item_Object __instance, ref bool __result)
+        {
+            if (!__result || __instance.itemData == null) return;
+            if (BloodbugItems.IsBanned(__instance.itemData) && BloodbugController.IsBloodbug(ENT_Player.playerObject))
+            {
+                __result = false;
+            }
+        }
+    }
+
+    // The starting hammer is removed, but a spawned one is alowed
+    [HarmonyPatch(typeof(Inventory), nameof(Inventory.AddItemToInventoryScreen))]
+    internal static class HammerBagPatch
+    {
+        private static bool Prefix(Item item)
+        {
+            if (!BloodbugItems.IsHammer(item) || !BloodbugController.IsBloodbug(ENT_Player.playerObject)) return true;
+            if (ConsoleSpawnPatch.Spawning)
+            {
+                BloodbugItems.Allow(item);
+                return true;
+            }
+            item.ClearDropObject();
+            return false;
+        }
+    }
+
+    [HarmonyPatch(typeof(CL_GameManager), "SpawnItem")]
+    internal static class ConsoleSpawnPatch
+    {
+        internal static bool Spawning;
+
+        private static void Prefix()
+        {
+            Spawning = true;
+        }
+
+        private static void Finalizer()
+        {
+            Spawning = false;
+        }
+    }
+
     [HarmonyPatch(typeof(HandItem_Melee), nameof(HandItem_Melee.Use))]
     internal static class HammerUsePatch
     {
@@ -143,19 +189,35 @@ namespace BloodbugMode
         }
     }
 
-    // prevent the player from crushing grubs
-    [HarmonyPatch(typeof(HandItem_Buff), nameof(HandItem_Buff.StartBuff))]
-    internal static class GrubCrushPatch
+    // Every roach hand item shares the animator with the eat animation of the Lemon Roach
+    [HarmonyPatch(typeof(HandItem), nameof(HandItem.Use))]
+    internal static class RoachEatPatch
     {
-        private static bool Prefix(HandItem_Buff __instance)
+        private static void Prefix(HandItem __instance)
         {
-            bool blocked = BloodbugItems.IsGrub(__instance.item)
-                && BloodbugController.IsBloodbug(__instance.hand.GetPlayer());
-            if (blocked)
+            if (__instance.used || !BloodbugItems.IsEdibleRoach(__instance)) return;
+            ENT_Player player = __instance.hand.GetPlayer();
+            if (!BloodbugController.IsBloodbug(player)) return;
+
+            Animator animator = __instance.anim != null ? __instance.anim : __instance.GetComponent<Animator>();
+            if (animator == null) return;
+
+            __instance.used = true;
+            animator.SetTrigger("Use");
+            if (GameAssets.RoachEatClip != null)
             {
-                BloodbugItems.Refuse(__instance);
+                AudioManager.PlaySound(GameAssets.RoachEatClip, player.transform, GameAssets.RoachEatVolume, 1f, 0f);
             }
-            return !blocked;
+        }
+    }
+
+    [HarmonyPatch(typeof(HandItem), nameof(HandItem.Activate))]
+    internal static class RoachSwallowPatch
+    {
+        private static void Postfix(HandItem __instance)
+        {
+            if (!__instance.used || !BloodbugItems.IsEdibleRoach(__instance)) return;
+            BloodbugController.For(__instance.hand.GetPlayer())?.EatRoach(__instance.item);
         }
     }
 

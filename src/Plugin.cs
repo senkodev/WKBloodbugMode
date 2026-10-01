@@ -13,7 +13,7 @@ namespace BloodbugMode
     {
         public const string Guid = "senkodev.whiteknuckle.bloodbugmode";
         public const string Name = "BloodbugMode";
-        public const string Version = "1.0.2";
+        public const string Version = "1.0.3";
 
         internal static ManualLogSource Log;
 
@@ -22,6 +22,7 @@ namespace BloodbugMode
         public static ConfigEntry<bool> BugHands;
         public static ConfigEntry<bool> BloodbugVoice;
         public static ConfigEntry<bool> MotherKinEnabled;
+        public static ConfigEntry<bool> AllowClimbing;
         public static ConfigEntry<float> BuzzVolume;
         public static ConfigEntry<bool> CameraBanking;
         public static ConfigEntry<bool> BugView;
@@ -52,6 +53,7 @@ namespace BloodbugMode
             BugHands = Config.Bind("Body", "BugHands", true, "Whether to replace the climber's hands with Bloodbug's forelegs.");
             BloodbugVoice = Config.Bind("Body", "BloodbugVoice", true, "Whether to use the Bloodbug's hurt and death sounds instead of the climber's.");
             MotherKinEnabled = Config.Bind("Binding", "MotherKin", true, "Whether the Mother treats you as a relative like she does in Roach Mode, with a Bloodbug ending of your own.");
+            AllowClimbing = Config.Bind("Binding", "AllowClimbing", true, "Whether handholds can be grabbed. Turn it off to rely on flying and landing on surfaces only.");
 
             BuzzVolume = Slider("BuzzVolume", 0.25f, "Volume of the wing buzz.");
             CameraBanking = Config.Bind("Presentation", "CameraBanking", true, "Tilt the view when flying sideways.");

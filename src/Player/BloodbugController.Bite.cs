@@ -50,6 +50,8 @@ namespace BloodbugMode
 
         internal float BloodLeft(GameEntity entity)
         {
+            // drones and turrets can't be eaten :D
+            if (entity is DEN_Drone || entity is DEN_Turret || entity is DEN_GantryTurret) return 0f;
             return bloodLeft.TryGetValue(entity.GetInstanceID(), out float left) ? left : Balance.BloodPerDenizen;
         }
 
@@ -97,7 +99,6 @@ namespace BloodbugMode
             }
         }
 
-        // todo: when a barnacle grabs you, you can sting it a bunch of times way too often with no cooldown
         private void UpdateBite(ref Vector3 vel, float dt)
         {
             chargeCooldown -= dt;
@@ -109,6 +110,16 @@ namespace BloodbugMode
             if (IsStunned || State == FlightState.Resting)
             {
                 EndCharge(0f);
+                return;
+            }
+
+            if (PlayerAccess.Grappled(player))
+            {
+                EndCharge(0f);
+                if (pressed)
+                {
+                    Sting();
+                }
                 return;
             }
 
@@ -155,7 +166,7 @@ namespace BloodbugMode
 
                 case Charge.Dashing:
                     chargeTimer -= dt;
-                    GameEntity target = State == FlightState.Flying ? FindChargeTarget() : null;
+                    Damageable target = State == FlightState.Flying ? FindChargeTarget() : null;
                     if (target != null)
                     {
                         Strike(ref vel, target);
@@ -169,6 +180,16 @@ namespace BloodbugMode
             }
         }
 
+        private void Sting()
+        {
+            player.ClearGrapple();
+            chargeCooldown = Balance.ChargeCooldown;
+
+            PlayBloodbugSound("attack-activate", 0.6f);
+            CL_CameraControl.Shake(0.05f);
+            player.SplatterScreenBlood(1);
+        }
+
         private void EndCharge(float cooldown)
         {
             if (charge == Charge.None) return;
@@ -176,15 +197,18 @@ namespace BloodbugMode
             chargeCooldown = cooldown;
         }
 
-        private void Strike(ref Vector3 vel, GameEntity target)
+        private void Strike(ref Vector3 vel, Damageable target)
         {
-            // float damage = Balance.ChargeDamage + player.curBuffs.GetBuff("addStrike");
-            // Damageable.DamageInfo hit = Damageable.DamageInfo.CreateDamageInfo(damage, player, "bloodbug");
             Damageable.DamageInfo hit = Damageable.DamageInfo.CreateDamageInfo(Balance.ChargeDamage, player, "bloodbug");
             hit.position = player.GetControllerPosition();
             hit.direction = dashDirection;
+            hit.tags ??= new List<string>();
+            if (target is GameEntity entity)
+            {
+                BloodbugKin.Provoke(entity);
+                entity.AddForce((dashDirection + Vector3.up * 0.3f) * ChargeKnockback, "denizen");
+            }
             target.Damage(hit);
-            target.AddForce((dashDirection + Vector3.up * 0.3f) * ChargeKnockback, "denizen");
 
             vel = -dashDirection * (ReboundSpeed / PlayerAccess.VelocityToMetres);
             crashCooldown = CrashCooldown;
@@ -221,8 +245,16 @@ namespace BloodbugMode
             CL_CameraControl.Shake(0.01f);
             if (!target.dead)
             {
+                BloodbugKin.Provoke(target);
                 target.Damage(Damageable.DamageInfo.CreateDamageInfo(FeedDamageRate * FeedTickSeconds, player, "bloodbug"));
             }
+        }
+
+        internal void EatRoach(Item roach)
+        {
+            float stamina = BloodbugItems.RoachStamina(roach);
+            Stamina = Mathf.Min(Stamina + stamina, MaxStamina);
+            FillHunger(stamina / Balance.BloodPerDenizen);
         }
 
         // a whole denizen fills the hunger bar
@@ -276,7 +308,7 @@ namespace BloodbugMode
             return nearest;
         }
 
-        private GameEntity FindChargeTarget()
+        private Damageable FindChargeTarget()
         {
             Vector3 centre = player.GetControllerPosition() + dashDirection * StrikeReach;
             int count = Physics.OverlapSphereNonAlloc(centre, StrikeRadius, overlaps, ~0, QueryTriggerInteraction.Collide);
@@ -284,6 +316,11 @@ namespace BloodbugMode
             {
                 GameEntity entity = EntityOf(overlaps[i]);
                 if (entity != null && !entity.dead && entity.damageable) return entity;
+            }
+            for (int i = 0; i < count; i++)
+            {
+                UT_Damage target = overlaps[i].GetComponentInParent<UT_Damage>();
+                if (target != null && target.canDamage && !target.transform.IsChildOf(player.transform)) return target;
             }
             return null;
         }

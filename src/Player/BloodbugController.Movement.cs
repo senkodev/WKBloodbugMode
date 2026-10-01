@@ -30,7 +30,7 @@ namespace BloodbugMode
             thrust = 0f;
             touchedFloor = false;
 
-            OnPills = BloodbugItems.OnPills(player);
+            OnPills = BloodbugItems.OnPills(player) || PlayerAccess.InfiniteStamina(player);
             if (OnPills)
             {
                 Stamina = MaxStamina;
@@ -200,7 +200,7 @@ namespace BloodbugMode
             topSpeed *= HungerSpeed();
             player.SetFrameSpeedMult(windingUp ? 0f : SpeedMultFor(topSpeed));
 
-            float brake = 1f / Balance.Responsiveness;
+            float brake = 1f / Balance.Inertia;
             if (thrust <= 0f)
             {
                 brake *= HoverBrake;
@@ -234,7 +234,7 @@ namespace BloodbugMode
         {
             float v = metresPerSecond / PlayerAccess.VelocityToMetres;
             float drag = player.dragCoefficient * (1f + player.curBuffs.GetBuff("addDrag"));
-            float needed = v / Balance.Responsiveness + drag * v * v;
+            float needed = v / Balance.Inertia + drag * v * v;
 
             float speedBuffs = Mathf.Max(1f + player.curBuffs.GetBuff("addSpeed"), 0.1f);
             float accelPerUnit = player.speed * player.airControl * PlayerAccess.InputAcceleration * speedBuffs;

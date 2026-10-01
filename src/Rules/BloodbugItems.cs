@@ -7,6 +7,7 @@ namespace BloodbugMode
     {
         public const string InjectorMark = "senkodev-bloodbug:injector";
         public const string PillsMark = "senkodev-bloodbug:pills";
+        public const string AllowedTag = "senkodev-bloodbug:allowed";
 
         private const string RemoteMarkerName = "Item_Artifact_Remote_Handhold";
         private const float FoodPerMeal = 10f;
@@ -22,7 +23,25 @@ namespace BloodbugMode
 
         public static bool IsHammer(Item item) => IsKind(item, "hammer");
 
-        public static bool IsGrub(Item item) => IsKind(item, "grub");
+        // allow spawned in hammers
+        public static bool IsBanned(Item item) => IsHammer(item) && !item.HasTag(AllowedTag);
+
+        public static void Allow(Item item)
+        {
+            if (!item.HasTag(AllowedTag)) item.itemTags.Add(AllowedTag);
+        }
+
+        public static float RoachStamina(Item item)
+        {
+            if (IsKind(item, "ruby")) return Balance.RubyRoachStamina;
+            if (IsKind(item, "platinum")) return Balance.PlatinumRoachStamina;
+            return Balance.RoachStamina;
+        }
+
+        public static bool IsEdibleRoach(HandItem tool)
+        {
+            return !(tool is HandItem_Buff) && !(tool is HandItem_Food) && IsKind(tool.item, "roach");
+        }
 
         public static bool IsThrown(HandItem_Shoot item) => !item.useAmmo;
 
@@ -35,7 +54,7 @@ namespace BloodbugMode
 
         public static bool BlocksSwing(HandItem_Melee tool)
         {
-            return IsHammer(tool.item) && BloodbugController.IsBloodbug(tool.hand.GetPlayer());
+            return IsBanned(tool.item) && BloodbugController.IsBloodbug(tool.hand.GetPlayer());
         }
 
         public static void MarkBuff(HandItem_Buff used, ENT_Player player)
@@ -102,6 +121,27 @@ namespace BloodbugMode
         public static float ScaledDropVel(float dropVel, float scale)
         {
             return (dropVel + GameTossSpeed) * scale - GameTossSpeed;
+        }
+
+        public static void RemoveHammers(Inventory inventory)
+        {
+            if (inventory == null) return;
+            for (int i = inventory.bagItems.Count - 1; i >= 0; i--)
+            {
+                Item item = inventory.bagItems[i];
+                if (!IsBanned(item)) continue;
+                item.ClearDropObject();
+                inventory.bagItems.RemoveAt(i);
+            }
+            for (int hand = 0; hand < inventory.itemHands.Length; hand++)
+            {
+                Item held = inventory.itemHands[hand].currentItem;
+                if (held != null && IsBanned(held))
+                {
+                    inventory.DestroyItemInHand(hand);
+                }
+            }
+            inventory.CalculateEncumberance();
         }
 
         public static void Refuse(HandItem item)

@@ -83,6 +83,17 @@ namespace BloodbugMode
                 || (entity.objectType != null && entity.objectType.IndexOf("bloodbug", StringComparison.OrdinalIgnoreCase) >= 0);
         }
 
+        // A bloodbug the player hurts can fight back
+        public static void Provoke(GameEntity entity)
+        {
+            if (!(entity is DEN_BasicDenizen denizen) || !IsBloodbug(denizen)) return;
+            var tags = new List<string>(denizen.targetComponent.targetIgnoreTags);
+            if (tags.Remove(Tag))
+            {
+                denizen.targetComponent.targetIgnoreTags = tags.ToArray();
+            }
+        }
+
         public static void IgnorePlayer(AITargetComponent targeting)
         {
             var tags = new List<string>(targeting.targetIgnoreTags);

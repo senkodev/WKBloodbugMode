@@ -5,13 +5,11 @@ namespace BloodbugMode
 {
     internal static class GameAssets
     {
-        public const string HalfInventoryId = "Perk_Binding_HalfInventory";
-        public const string SurvivalId = "Perk_Binding_Survival";
         public const string MoonRocksId = "Perk_Trinket_MoonRock";
-        // public const string CarnalBloodlustId = "Perk_CarnalBloodlust";
 
         private const string BloodbugPrefabName = "Denizen_Bloodbug";
         private const string HealedClipName = "player_injury_healed";
+        private const string LemonRoachName = "Denizen_Roach_Lemon";
 
         private static readonly string[] HurtSets = { "hurt", "hurt-falling", "hurt-heat" };
         private static readonly string[] DeathSets = { "death" };
@@ -23,11 +21,10 @@ namespace BloodbugMode
 
         public static GameObject BloodbugPrefab { get; private set; }
         public static AudioClip BuzzClip { get; private set; }
-        public static Perk HalfInventory { get; private set; }
-        public static Perk Survival { get; private set; }
-        // public static Perk CarnalBloodlust { get; private set; }
 
         public static AudioClipHandlerOverride Voice { get; private set; }
+        public static AudioClip RoachEatClip { get; private set; }
+        public static float RoachEatVolume { get; private set; } = 1f;
 
         public static AudioClip HealedClip
         {
@@ -61,12 +58,18 @@ namespace BloodbugMode
                 BuzzClip = source != null ? source.clip : null;
                 Voice = CreateVoice(BloodbugPrefab.GetComponent<UT_AudioClipHandler>());
             }
-            HalfInventory = game.perkAssets.Find(perk => perk.id == HalfInventoryId);
-            Survival = game.perkAssets.Find(perk => perk.id == SurvivalId);
-            // CarnalBloodlust = game.perkAssets.Find(perk => perk.id == CarnalBloodlustId);
+
+            GameObject lemon = CL_AssetManager.GetAssetGameObject(LemonRoachName);
+            Item_Object lemonObject = lemon != null ? lemon.GetComponent<Item_Object>() : null;
+            HandItem_Buff lemonHand = lemonObject != null ? lemonObject.itemData.handItemAsset as HandItem_Buff : null;
+            if (lemonHand != null)
+            {
+                RoachEatClip = lemonHand.audioClip;
+                RoachEatVolume = lemonHand.audioVolume;
+            }
 
             Plugin.Log.LogInfo($"game assets: prefab={Name(BloodbugPrefab)}, buzz={Name(BuzzClip)}, "
-                + $"voice={(Voice != null ? Voice.setOverrides.Count : 0)} sets, half inventory={Name(HalfInventory)}, survival={Name(Survival)}");
+                + $"voice={(Voice != null ? Voice.setOverrides.Count : 0)} sets, roach eating={Name(RoachEatClip)}");
             return true;
         }
 

@@ -71,6 +71,7 @@ namespace BloodbugMode
     }
 
     // the game carries props by their mass, so half the strength is the same as twice the weight
+    // stuck props like vent covers and planks break loose by pull over mass, they keep the full strength for game balance sake
     [HarmonyPatch(typeof(ENT_Player), nameof(ENT_Player.GrabPropUpdate))]
     internal static class PropCarryPatch
     {
@@ -78,7 +79,7 @@ namespace BloodbugMode
         {
             __state = default;
             CL_Prop prop = __instance.hands[hand].grabTarget;
-            if (prop == null || BloodbugItems.IsPlank(prop) || !BloodbugController.IsBloodbug(__instance)) return;
+            if (prop == null || prop.stuck || BloodbugItems.IsPlank(prop) || !BloodbugController.IsBloodbug(__instance)) return;
 
             Rigidbody body = prop.GetRigidbody();
             __state = (body, body.mass);
@@ -90,6 +91,23 @@ namespace BloodbugMode
             if (__state.body != null)
             {
                 __state.body.mass = __state.mass;
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(Cosmetic_HandItem), nameof(Cosmetic_HandItem.SpriteSwap))]
+    internal static class BugHandsPalettePatch
+    {
+        private static void Postfix(Cosmetic_HandItem __instance, GameObject root)
+        {
+            if (__instance != BugHands.Cosmetic) return;
+            foreach (SpriteRenderer renderer in root.GetComponentsInChildren<SpriteRenderer>())
+            {
+                Material material = renderer.sharedMaterial;
+                if (material != null && material.HasFloat("_PaletteBaseBlend"))
+                {
+                    material.SetFloat("_PaletteBaseBlend", 0f);
+                }
             }
         }
     }

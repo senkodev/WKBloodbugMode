@@ -11,12 +11,13 @@ namespace BloodbugMode
             public AudioRolloffMode mode;
             public float min;
             public float max;
-            public bool bypass;
+            public AudioLowPassFilter muffle;
         }
 
+        private const float OwnSoundRadius = 0.75f;
+
         private static readonly List<Saved> changed = new List<Saved>();
-        private static readonly HashSet<AudioSource> pooled = new HashSet<AudioSource>();
-        private static AudioLowPassFilter muffle;
+        private static readonly Dictionary<AudioSource, AudioLowPassFilter> pooled = new Dictionary<AudioSource, AudioLowPassFilter>();
 
         public static bool On { get; private set; }
 
@@ -26,27 +27,27 @@ namespace BloodbugMode
             On = on;
             if (on)
             {
-                // https://docs.unity3d.com/ScriptReference/AudioLowPassFilter.html
-                muffle = Object.FindAnyObjectByType<AudioListener>().gameObject.AddComponent<AudioLowPassFilter>();
-                muffle.cutoffFrequency = Balance.HearingCutoff;
-                muffle.lowpassResonanceQ = Balance.HearingResonance;
                 // https://docs.unity3d.com/ScriptReference/Object.FindObjectsByType.html
                 Adjust(Object.FindObjectsByType<AudioSource>(FindObjectsSortMode.None));
             }
             else
             {
-                Object.Destroy(muffle);
                 Restore();
             }
         }
 
         public static void Pooled(AudioSource source)
         {
-            pooled.Add(source);
-            if (On)
+            if (!pooled.ContainsKey(source))
             {
-                source.bypassListenerEffects = true;
+                pooled.Add(source, Muffle(source, false));
             }
+        }
+
+        public static void Played(AudioSource source, Vector3 position, Transform from, float spatial)
+        {
+            if (source == null || !pooled.TryGetValue(source, out AudioLowPassFilter muffle)) return;
+            muffle.enabled = On && spatial > 0f && !IsOwn(position, from);
         }
 
         public static float Fade(Vector3 position)
@@ -55,12 +56,23 @@ namespace BloodbugMode
             return 1f - Mathf.InverseLerp(Balance.HearingNear, Balance.HearingFar, Vector3.Distance(position, ears));
         }
 
+        public static bool IsOwn(Vector3 position, Transform from)
+        {
+            Transform player = ENT_Player.playerObject.transform;
+            if (from != null)
+            {
+                return from == player || from.IsChildOf(player);
+            }
+            return Vector3.Distance(position, player.position) < OwnSoundRadius;
+        }
+
         public static void Adjust(IEnumerable<AudioSource> sources)
         {
             Transform player = ENT_Player.playerObject.transform;
             foreach (AudioSource source in sources)
             {
-                if (pooled.Contains(source)) continue;
+                if (pooled.ContainsKey(source)) continue;
+                if (source.spatialBlend <= 0f || source.transform.IsChildOf(player)) continue;
 
                 changed.Add(new Saved
                 {
@@ -68,25 +80,32 @@ namespace BloodbugMode
                     mode = source.rolloffMode,
                     min = source.minDistance,
                     max = source.maxDistance,
-                    bypass = source.bypassListenerEffects
+                    muffle = Muffle(source, true)
                 });
-
-                // music, UI and climber sounds are unaffected
-                // https://docs.unity3d.com/ScriptReference/AudioSource-bypassListenerEffects.html
-                if (source.spatialBlend <= 0f || source.transform.IsChildOf(player))
-                {
-                    source.bypassListenerEffects = true;
-                    continue;
-                }
                 source.rolloffMode = AudioRolloffMode.Linear;
                 source.minDistance = Mathf.Min(source.minDistance, Balance.HearingNear);
                 source.maxDistance = Mathf.Min(source.maxDistance, Balance.HearingFar);
             }
         }
 
+        // https://docs.unity3d.com/ScriptReference/AudioLowPassFilter.html
+        private static AudioLowPassFilter Muffle(AudioSource source, bool on)
+        {
+            AudioLowPassFilter muffle = source.GetComponent<AudioLowPassFilter>();
+            if (muffle == null)
+            {
+                muffle = source.gameObject.AddComponent<AudioLowPassFilter>();
+            }
+            muffle.cutoffFrequency = Balance.HearingCutoff;
+            muffle.lowpassResonanceQ = Balance.HearingResonance;
+            muffle.enabled = on;
+            return muffle;
+        }
+
         public static void Forget()
         {
             changed.Clear();
+            pooled.Clear();
             On = false;
         }
 
@@ -99,9 +118,19 @@ namespace BloodbugMode
                 saved.source.rolloffMode = saved.mode;
                 saved.source.minDistance = saved.min;
                 saved.source.maxDistance = saved.max;
-                saved.source.bypassListenerEffects = saved.bypass;
+                if (saved.muffle != null)
+                {
+                    saved.muffle.enabled = false;
+                }
             }
             changed.Clear();
+            foreach (AudioLowPassFilter muffle in pooled.Values)
+            {
+                if (muffle != null)
+                {
+                    muffle.enabled = false;
+                }
+            }
         }
     }
 }

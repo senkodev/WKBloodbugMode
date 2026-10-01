@@ -22,7 +22,7 @@ namespace BloodbugMode
         public const float BurstSpeed = 14f;
 
         // other flight parameters
-        public const float Responsiveness = 0.85f;
+        public const float Inertia = 0.85f;
         public const float Wobble = 0.85f;
 
         // hunger
@@ -37,6 +37,9 @@ namespace BloodbugMode
         public const float GroundRegen = 17f;
         public const float PerchRegen = 14f;
         public const float FoodStamina = 40f;
+        public const float RoachStamina = 25f;
+        public const float PlatinumRoachStamina = 32f;
+        public const float RubyRoachStamina = 40f;
 
         // 25% less stamina drain with the moon rocks trinket in inventory
         public const float MoonRocksDrain = 0.75f;

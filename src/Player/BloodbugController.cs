@@ -38,7 +38,7 @@ namespace BloodbugMode
 
         public static bool BlocksClimbing(ENT_Player player, CL_Handhold handhold)
         {
-            return IsBloodbug(player) && !BloodbugItems.IsRemoteMarker(handhold);
+            return IsBloodbug(player) && !Plugin.AllowClimbing.Value && !BloodbugItems.IsRemoteMarker(handhold);
         }
 
         internal void Leave()
@@ -116,6 +116,7 @@ namespace BloodbugMode
 
             BloodbugContent.Register();
             GivePerks();
+            BloodbugItems.RemoveHammers(Inventory.instance);
             UpdateDebuffs();
             Stamina = MaxStamina;
 
