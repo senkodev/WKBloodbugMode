@@ -35,13 +35,13 @@ Then start a new run and pick Bloodbug Mode from the bindings.
 ## Buffs
 
 - You can fly. Flying uses a stamina bar that fills up again on the ground and on walls
-- You can land on walls and ceilings and crawl on them, while slowly regaining stamina
+- You can land on walls and ceilings to regain flying stamina. Crawling on them restores stamina at half the speed.
 - Press `V` while flying to charge at a denizen. The charge also sets off anything a rebar would, like the flowers
 - Hold `V` next to a body to drink from it. Also works on alive denizens. That gives you stamina and a bit of health and fills the hunger bar
 - If a barnacle caught you with its tongue, press `V` to sting the tongue and get free
 - A roach you hold can be eaten. It gives some stamina and fills the hunger bar a little, platinum roaches give more and the ruby the most
 - Injectors make you fly faster while they last and pills give you infinite stamina for 35 seconds
-- The Moon Rocks trinket makes flying drain 25% less of the flight stamina
+- The Moon Rocks trinket makes flying drain 20% less of the flight stamina
 - You float on water for a few seconds and can take off from it
 - Falling only hurts from two times the usual height
 - You can't crush roaches with your weight (just like in Roach Mode)

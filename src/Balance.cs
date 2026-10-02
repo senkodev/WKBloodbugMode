@@ -29,20 +29,22 @@ namespace BloodbugMode
         public const float HungryBelow = 0.3f;
         public const float StarvingSpeed = 0.75f;
 
-        // stamina per second
-        public const float MaxStamina = 75f;
-        public const float HoverDrain = 7f;
+        // stamina drain and regen in stamina points per second
+        public const float MaxStamina = 70f;
+        public const float HoverDrain = 6f;
         public const float CruiseDrain = 12f;
-        public const float BurstDrain = 16f;
-        public const float GroundRegen = 17f;
-        public const float PerchRegen = 14f;
+        public const float BurstDrain = 18f;
+        public const float GroundRegen = 16f;
+        public const float PerchRegen = 8f;
+        // stamina regen at 50% the normal rate when crawling on walls/ceilings
+        public const float CrawlRegen = 0.5f;
         public const float FoodStamina = 40f;
         public const float RoachStamina = 25f;
         public const float PlatinumRoachStamina = 32f;
         public const float RubyRoachStamina = 40f;
 
-        // 25% less stamina drain with the moon rocks trinket in inventory
-        public const float MoonRocksDrain = 0.75f;
+        // 20% less stamina drain with the moon rocks trinket in inventory
+        public const float MoonRocksDrain = 0.8f;
 
         // by default the game's effect runs for 100 seconds slowly fading out by the end
         // balanced out to 35 seconds not to make the pills way too OP

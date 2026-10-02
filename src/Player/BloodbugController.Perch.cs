@@ -83,10 +83,7 @@ namespace BloodbugMode
             {
                 vel -= perchNormal * (Mathf.Sign(gap) * PerchSettleSpeed / PlayerAccess.VelocityToMetres);
             }
-            if (!crawling)
-            {
-                Recover(Balance.PerchRegen, dt);
-            }
+            Recover(crawling ? Balance.PerchRegen * Balance.CrawlRegen : Balance.PerchRegen, dt);
         }
 
         private void LeavePerch()
