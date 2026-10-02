@@ -122,7 +122,7 @@ namespace BloodbugMode
                     player.fly = false;
                     if (inWater && Float(ref vel, jumpHeld || jump, crouchHeld, dt)) break;
                     IsAfloat = false;
-                    Recover(Balance.PerchRegen, dt);
+                    Recover(player.IsHanging() ? Balance.HandholdRegen : Balance.PerchRegen, dt);
                     break;
             }
 

@@ -36,6 +36,10 @@ namespace BloodbugMode
         public const float BurstDrain = 18f;
         public const float GroundRegen = 16f;
         public const float PerchRegen = 8f;
+
+        // while hanging on a handhold
+        public const float HandholdRegen = 10f;
+
         // stamina regen at 50% the normal rate when crawling on walls/ceilings
         public const float CrawlRegen = 0.5f;
         public const float FoodStamina = 40f;
