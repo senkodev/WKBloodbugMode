@@ -35,3 +35,13 @@
 - Own Bloodbug sounds and in-game music are no longer muffled by the bug hearing
 - A Bloodbug you attack properly fights back now >:)
 - Charging into the flowers from the Nest now works the same as shooting at them
+
+## 1.0.4
+- Adjusted the shot origin to better accommodate the Bloodbug's scale, shots no longer hit the ground in front of you on uneven surfaces
+- You can now grind yourself in the recycler, it even pays whole **three roaches** for it :D (don't do it..)
+- Various balancing changes to max stamina, stamina drain and regen
+- Flying stamina now regains at half the speed when walking on a wall/ceiling
+- Hanging onto handholds now regains flying stamina a bit faster
+- Nerfed the Moon Rocks trinket from 25% to 20% less stamina drain
+- Removed "fans" from the Light Body description since they no longer throw the Bloodbug further than the Climber
+- Added a link to Sckurge's playthrough of the mod <3, as well as credits for UnityExplorer to the README

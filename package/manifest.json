@@ -1,6 +1,6 @@
 {
   "name": "BloodbugMode",
-  "version_number": "1.0.3",
+  "version_number": "1.0.4",
   "website_url": "https://github.com/senkodev/WKBloodbugMode",
   "description": "Adds a Bloodbug binding. Fly on limited stamina, land on walls and ceilings to rest, charge and feed on denizens, float on water and perceive the world as a bloodbug does (kinda).",
   "dependencies": [
