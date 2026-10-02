@@ -103,7 +103,8 @@ This also copies the mod into your r2modman profile. If your game and/or profile
 
 ## Credits
 
-This mod is dedicated to Sckurge, who you can find on [Twitch](https://www.twitch.tv/sckurge) and [YouTube](https://www.youtube.com/@SckurgeWK)!
+This mod is dedicated to **Sckurge**, who you can find on [Twitch](https://www.twitch.tv/sckurge) and [YouTube](https://www.youtube.com/@SckurgeWK)!
+You can also find his playthrough of the mod on [YouTube](https://www.youtube.com/watch?v=xTYvCStfkWo) :)
 
 - Dark Machine Games for White Knuckle
 - CiCi for the [Trinket & Binding Framework](https://thunderstore.io/c/white-knuckle/p/CiCisMods/CiCisTrinketAndBindingFramework/)
