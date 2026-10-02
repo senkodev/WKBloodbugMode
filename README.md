@@ -109,6 +109,7 @@ You can also find his playthrough of the mod on [YouTube](https://www.youtube.co
 - Dark Machine Games for White Knuckle
 - CiCi for the [Trinket & Binding Framework](https://thunderstore.io/c/white-knuckle/p/CiCisMods/CiCisTrinketAndBindingFramework/)
 - The [BepInEx](https://github.com/BepInEx/BepInEx) and [HarmonyX](https://github.com/BepInEx/HarmonyX) teams for the mod loader and patching
+- sinai-dev and yukiaiji for [UnityExplorer](https://github.com/yukieiji/UnityExplorer)
 - The idea was inspired by the original Roach Mode in the game. Code, idea, design and testing are by [senkodev](https://senko.dev)
 
 ## License
