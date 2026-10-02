@@ -87,6 +87,19 @@ namespace BloodbugMode
         }
     }
 
+    // Originally the shot starts 0.4 m behind the player camera, which is fine for the climber, but not for the bloodbug due to its scale
+    // This patch moves the shot origin to the camera position and scales the distance to the camera by the bloodbug scale
+    [HarmonyPatch(typeof(HandItem_Shoot), "CreateProjectile")]
+    internal static class ShotOriginPatch
+    {
+        private static void Prefix(HandItem_Shoot __instance, ref Vector3 startPos)
+        {
+            if (!BloodbugController.IsBloodbug(__instance.hand.GetPlayer())) return;
+            Vector3 eye = Camera.main.transform.position;
+            startPos = eye + (startPos - eye) * Balance.Scale;
+        }
+    }
+
     [HarmonyPatch(typeof(HandItem_Shoot), "CreateProjectile")]
     internal static class ThrowStrengthPatch
     {
