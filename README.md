@@ -65,6 +65,8 @@ Additionally you can't:
 
 Levers, cranks, buttons, vending machines and the roach trader will still work. If you grab a lever or a crank while flying, you will hang onto it so you don't drift away.
 
+You can also grind yourself in the recycler and get whole **three roaches** for it! (don't even try this...)
+
 ## Viewpoint
 
 The in-game camera bulges like a fisheye lens, you also have protanopia and things far away are blurry. You also have bug legs instead of hands.

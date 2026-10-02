@@ -34,6 +34,35 @@ namespace BloodbugMode
         }
     }
 
+    [HarmonyPatch(typeof(ENV_Recycler), "Start")]
+    internal static class RecyclerGrind
+    {
+        public const string DamageType = "recycler";
+
+        private static void Postfix(ENV_Recycler __instance)
+        {
+            ENT_Player player = ENT_Player.playerObject;
+            if (BloodbugController.IsBloodbug(player))
+            {
+                Admit(__instance, player);
+            }
+        }
+
+        // Originally two box colliders cover the hopper, so the climber can't get in
+        // This allows the player to enter the recycler when in Bloodbug Mode by ignoring collissions on the hopper
+        public static void Admit(ENV_Recycler recycler, ENT_Player player)
+        {
+            recycler.mask = recycler.mask | (1 << player.gameObject.layer);
+            foreach (BoxCollider plug in recycler.recycleZone.transform.parent.GetComponentsInChildren<BoxCollider>())
+            {
+                if (!plug.isTrigger && plug.name == "Collider")
+                {
+                    Physics.IgnoreCollision(player.cCon, plug);
+                }
+            }
+        }
+    }
+
     [HarmonyPatch(typeof(OS_Computer_Interface), nameof(OS_Computer_Interface.ActivateComputer))]
     internal static class ComputerUsePatch
     {

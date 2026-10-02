@@ -67,6 +67,10 @@ namespace BloodbugMode
         public const float BloodPerDenizen = 70f;
 
         public const float ScoreMultiplierBonus = 0.35f;
+
+        // what the recycler pays for grinding yourself :D
+        public const int RecycleSelfPayout = 3;
+
         public const float BugViewSharpTo = 10f;
 
         // fixes camera issues on higher fov

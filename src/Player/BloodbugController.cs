@@ -121,6 +121,11 @@ namespace BloodbugMode
             Stamina = MaxStamina;
 
             player._OnEat += OnEat;
+            player._OnDamage += OnDamaged;
+            foreach (ENV_Recycler recycler in FindObjectsByType<ENV_Recycler>(FindObjectsSortMode.None))
+            {
+                RecyclerGrind.Admit(recycler, player);
+            }
 
             Leaderboards.MarkRun();
             CreateEffects();
@@ -140,6 +145,7 @@ namespace BloodbugMode
 
             player.fly = false;
             player._OnEat -= OnEat;
+            player._OnDamage -= OnDamaged;
             Plugin.BiteKey.ConfigFile.SettingChanged -= OnSettingChanged;
             if (!keepDebuffs)
             {
@@ -172,6 +178,14 @@ namespace BloodbugMode
             if (!active || meals <= 0f) return;
             Stamina = Mathf.Min(Stamina + Balance.FoodStamina * meals, MaxStamina);
             meter.Punch();
+        }
+
+        private void OnDamaged(Damageable.DamageInfo info)
+        {
+            if (info.type == RecyclerGrind.DamageType)
+            {
+                CL_GameManager.AddRoaches(Balance.RecycleSelfPayout);
+            }
         }
 
         private void OnEat(string type)
