@@ -104,7 +104,7 @@ namespace BloodbugMode
             database.id = DatabaseId;
             database.perkAssets.AddRange(new[] { Perk, LightBody, WetWings, WingInjury });
 
-            LightBody.description = $"(-) You weigh next to nothing.\nBlows, blasts, fans and steam throw you {Percent(Balance.LightBodyKnockback - 1f)}% further.";
+            LightBody.description = $"(-) You weigh next to nothing.\nBlows, blasts and steam throw you {Percent(Balance.LightBodyKnockback - 1f)}% further.";
             WetWings.description = $"(-) Your wings are soaked.\nFlying costs {Percent(Balance.WetDrainMultiplier - 1f)}% more stamina until they dry out.";
             WingInjury.description = $"(-) A hard crash has torn one of your wings.\nEach injury takes {Percent(Balance.InjuryStaminaLoss)}% off your flight stamina until it heals.";
             WingInjury.stackMax = Balance.MaxInjuries;
