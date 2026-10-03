@@ -63,6 +63,23 @@ namespace BloodbugMode
         }
     }
 
+    [HarmonyPatch(typeof(UT_PlayerForceMover), "FixedUpdate")]
+    internal static class PlayerDraggedPatch
+    {
+        private static void Postfix(UT_PlayerForceMover __instance)
+        {
+            if (!__instance.active || __instance.playerPullForce <= 0f) return;
+            ENT_Player player = ENT_Player.playerObject;
+            if (!BloodbugController.IsBloodbug(player)) return;
+
+            float distance = Vector3.Distance(__instance.targetPoint.position, player.transform.position);
+            if (!__instance.limitByDistance || distance <= __instance.distanceLimit)
+            {
+                BloodbugController.draggedAt = Time.fixedTime;
+            }
+        }
+    }
+
     [HarmonyPatch(typeof(OS_Computer_Interface), nameof(OS_Computer_Interface.ActivateComputer))]
     internal static class ComputerUsePatch
     {

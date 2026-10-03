@@ -6,6 +6,7 @@ namespace BloodbugMode
     public partial class BloodbugController
     {
         internal static int activeForceZones;
+        internal static float draggedAt = -1f;
 
         private float wetTimer;
         private float injuryTimer;

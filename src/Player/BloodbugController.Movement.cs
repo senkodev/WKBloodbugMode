@@ -36,6 +36,15 @@ namespace BloodbugMode
                 Stamina = MaxStamina;
             }
 
+            if (Time.fixedTime - draggedAt < dt * 1.5f)
+            {
+                State = FlightState.Grounded;
+                player.fly = false;
+                EndCharge(0f);
+                velocityBeforeMove = vel;
+                return;
+            }
+
             // https://docs.unity3d.com/ScriptReference/CharacterController-isGrounded.html
             bool grounded = player.cCon.isGrounded;
             bool swimming = player.IsSwimming();
