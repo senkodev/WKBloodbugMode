@@ -19,13 +19,11 @@
     <ManagedDir>$(GameDir)\White Knuckle_Data\Managed</ManagedDir>
     <DeployDir Condition="'$(DeployDir)' == ''">$(BepInExDir)\plugins\senkodev-BloodbugMode</DeployDir>
     <Deploy Condition="'$(Deploy)' == ''">true</Deploy>
-    <FrameworkDir Condition="'$(FrameworkDir)' == ''">$(BepInExDir)\plugins\CiCisMods-CiCisTrinketAndBindingFramework</FrameworkDir>
   </PropertyGroup>
 
   <ItemGroup>
     <Reference Include="$(BepInExDir)\core\BepInEx.dll" Private="false" />
     <Reference Include="$(BepInExDir)\core\0Harmony.dll" Private="false" />
-    <Reference Include="$(FrameworkDir)\**\TrinketAndBindingFramework.dll" Private="false" />
     <GameAssembly Include="$(ManagedDir)\*.dll"
                   Exclude="$(ManagedDir)\System*.dll;$(ManagedDir)\mscorlib.dll;$(ManagedDir)\netstandard.dll;$(ManagedDir)\Mono.*.dll;$(ManagedDir)\Microsoft.*.dll" />
     <Reference Include="@(GameAssembly)" Private="false" />

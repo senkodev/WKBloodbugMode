@@ -4,7 +4,6 @@
   "website_url": "https://github.com/senkodev/WKBloodbugMode",
   "description": "Adds a Bloodbug binding. Fly on limited stamina, land on walls and ceilings to rest, charge and feed on denizens, float on water and perceive the world as a bloodbug does (kinda).",
   "dependencies": [
-    "BepInEx-BepInExPack-5.4.2305",
-    "CiCisMods-CiCisTrinketAndBindingFramework-2.2.6"
+    "BepInEx-BepInExPack-5.4.2305"
   ]
 }

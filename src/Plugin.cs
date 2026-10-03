@@ -8,7 +8,7 @@ namespace BloodbugMode
 {
     // https://docs.bepinex.dev/articles/dev_guide/plugin_tutorial/2_plugin_start.html
     [BepInPlugin(Guid, Name, Version)]
-    [BepInDependency(TrinketAndBindingFramework.Plugin.GUID)]
+    [BepInDependency(BindingFramework.Guid, BepInDependency.DependencyFlags.SoftDependency)]
     public class Plugin : BaseUnityPlugin
     {
         public const string Guid = "senkodev.whiteknuckle.bloodbugmode";

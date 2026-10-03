@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using TrinketAndBindingFramework;
 using UnityEngine;
 
 namespace BloodbugMode
@@ -17,6 +16,7 @@ namespace BloodbugMode
         private const string CardArtPerkId = "Perk_Binding_HalfInventory";
 
         public static Perk Perk { get; private set; }
+        public static Trinket Binding { get; private set; }
         public static Sprite Icon { get; private set; }
         public static Sprite Pixel { get; private set; }
 
@@ -29,16 +29,30 @@ namespace BloodbugMode
         public static void RegisterBinding()
         {
             Create();
-            TrinketRegistry.RegisterBinding(
-                BindingId,
-                "Bloodbug Mode",
-                Description(),
-                scoreMultiplierBonus: Balance.ScoreMultiplierBonus,
-                icon: Icon,
-                perksToGrantFactory: () => new List<Perk> { Perk });
-            TrinketRegistry.RegisterMutexHub(BindingId, BindingRules.GameRoachBinding);
+            if (BindingFramework.TryRegister(BindingId, "Bloodbug Mode", Description(), Balance.ScoreMultiplierBonus, Icon,
+                () => new List<Perk> { Perk }, BindingRules.GameRoachBinding))
+            {
+                return;
+            }
 
-            // NoHammerBindingRegistrar.AddExternalSource(() => Leaderboards.IsBloodbugRun);
+            Binding = ModFiles.Keep(ScriptableObject.CreateInstance<Trinket>());
+            Binding.name = TrinketName;
+            Binding.title = "Bloodbug Mode";
+            Binding.description = Description();
+            Binding.flavorText = "";
+            Binding.isBinding = true;
+            Binding.icon = Icon;
+            Binding.lockIcon = Icon;
+            Binding.cost = 1;
+            Binding.scoreMultiplierBonus = Balance.ScoreMultiplierBonus;
+            Binding.scoreBonus = 0f;
+            Binding.comingSoon = false;
+            Binding.progressionUnlock = null;
+            Binding.settingBlacklist = new List<string>();
+            Binding.itemsToGrant = new List<Item_Object>();
+            Binding.perksToGrant = new List<Perk> { Perk };
+            Binding.pouchesToGrant = 0;
+            database.trinketAssets.Add(Binding);
         }
 
         public static void Register()

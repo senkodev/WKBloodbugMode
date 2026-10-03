@@ -4,7 +4,7 @@ A White Knuckle mod that adds a new binding called **Bloodbug Mode**. Pick it be
 
 Works in Campaign and Endless. Runs with this binding are not sent to the leaderboards.
 
-Needs [CiCi's Trinket & Binding Framework](https://thunderstore.io/c/white-knuckle/p/CiCisMods/CiCisTrinketAndBindingFramework/).
+[CiCi's Trinket & Binding Framework](https://thunderstore.io/c/white-knuckle/p/CiCisMods/CiCisTrinketAndBindingFramework/) is optional. With it installed the binding is listed as a mod binding, without it the mod adds it to the game's own list.
 
 I have spent countless hours researching things about flies, like about how they see and hear and overall perceive the world, and tried my best to replicate the effects through this mod.
 
@@ -19,16 +19,15 @@ https://github.com/user-attachments/assets/696da866-aa4a-494a-b858-7502df89421b
 With a Mod Manager like r2modman:
 
 1. Pick White Knuckle and a profile
-2. Search for Bloodbug Mode in the online mods and install it. BepInEx and the framework come along on their own, otherwise install them as well
+2. Search for Bloodbug Mode in the online mods and install it. BepInEx comes along on its own, otherwise install it as well
 3. Start the game modded
 
-If you have the zip instead, use `Settings > Profile > Import local mod` in r2modman and install the framework from the online mods yourself.
+If you have the zip instead, use `Settings > Profile > Import local mod` in r2modman.
 
 Manual install:
 
 1. Install [BepInEx 5](https://thunderstore.io/c/white-knuckle/p/BepInEx/BepInExPack/) into the game folder and start the game once
-2. Install [CiCi's Trinket & Binding Framework](https://thunderstore.io/c/white-knuckle/p/CiCisMods/CiCisTrinketAndBindingFramework/)
-3. Unzip this mod into its own folder (!) inside `BepInEx/plugins`. Keep the images next to the dll, the mod loads them from there
+2. Unzip this mod into its own folder (!) inside `BepInEx/plugins`. Keep the images next to the dll, the mod loads them from there
 
 Then start a new run and pick Bloodbug Mode from the bindings.
 
@@ -91,7 +90,7 @@ You can also get the perk in the middle of a run with the console command `addpe
 
 ## Building
 
-You will need the .NET SDK and the game with [BepInEx](https://old.thunderstore.io/c/white-knuckle/p/BepInEx/BepInExPack/) and [CiCisTrinketAndBindingFramework](https://old.thunderstore.io/c/white-knuckle/p/CiCisMods/CiCisTrinketAndBindingFramework/) **already installed**.
+You will need the .NET SDK and the game with [BepInEx](https://old.thunderstore.io/c/white-knuckle/p/BepInEx/BepInExPack/) **already installed**.
 
 ```
 dotnet build src/BloodbugMode.csproj -c Release
@@ -107,7 +106,7 @@ This mod is dedicated to **Sckurge**, who you can find on [Twitch](https://www.t
 You can also find his playthrough of the mod on [YouTube](https://www.youtube.com/watch?v=xTYvCStfkWo) :)
 
 - Dark Machine Games for White Knuckle
-- CiCi for the [Trinket & Binding Framework](https://thunderstore.io/c/white-knuckle/p/CiCisMods/CiCisTrinketAndBindingFramework/)
+- CiCi for the [Trinket & Binding Framework](https://thunderstore.io/c/white-knuckle/p/CiCisMods/CiCisTrinketAndBindingFramework/), which the mod used to run on
 - The [BepInEx](https://github.com/BepInEx/BepInEx) and [HarmonyX](https://github.com/BepInEx/HarmonyX) teams for the mod loader and patching
 - sinai-dev and yukiaiji for [UnityExplorer](https://github.com/yukieiji/UnityExplorer)
 - The idea was inspired by the original Roach Mode in the game. Code, idea, design and testing are by [senkodev](https://senko.dev)
