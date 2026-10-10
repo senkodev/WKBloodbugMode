@@ -45,3 +45,7 @@
 - Nerfed the Moon Rocks trinket from 25% to 20% less stamina drain
 - Removed "fans" from the Light Body description since they no longer throw the Bloodbug further than the Climber
 - Added a link to Sckurge's playthrough of the mod <3, as well as credits for UnityExplorer to the README
+
+## 1.0.5
+- CiCi's Trinket & Binding Framework is now optional. With it installed the binding still goes through it and shows up as a mod binding, without it the mod adds the binding to the game itself!
+- Flight is disabled while a scripted event drags you along, like the Mother pulling you back to her, so it no longer forces you into flight and drains your stamina

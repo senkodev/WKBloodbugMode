@@ -13,7 +13,7 @@ namespace BloodbugMode
     {
         public const string Guid = "senkodev.whiteknuckle.bloodbugmode";
         public const string Name = "BloodbugMode";
-        public const string Version = "1.0.4";
+        public const string Version = "1.0.5";
 
         internal static ManualLogSource Log;
 
