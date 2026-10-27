@@ -50,15 +50,6 @@ namespace BloodbugMode
         }
     }
 
-    [HarmonyPatch(typeof(SteamManager), nameof(SteamManager.UploadGamemodeResults))]
-    internal static class SteamUploadPatch
-    {
-        private static bool Prefix()
-        {
-            return !Leaderboards.IsBloodbugRun;
-        }
-    }
-
     internal static class Leaderboards
     {
         private static bool flown;
