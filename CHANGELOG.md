@@ -49,3 +49,8 @@
 ## 1.0.5
 - CiCi's Trinket & Binding Framework is now optional. With it installed the binding still goes through it and shows up as a mod binding, without it the mod adds the binding to the game itself!
 - Flight is disabled while a scripted event drags you along, like the Mother pulling you back to her, so it no longer forces you into flight and drains your stamina
+
+## 1.0.6
+- Fixed the mod not working after the Shortcuts and Halloween updates
+- A game update removing a method the mod patches now only disables that one patch instead of the whole mod, with an error in the log saying which patch failed
+- Added a second patch to avoid leaderboard uploads, just in case this gets updated in the game again

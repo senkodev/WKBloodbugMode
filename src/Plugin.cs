@@ -2,6 +2,8 @@ using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
+using System;
+using System.Reflection;
 using UnityEngine;
 
 namespace BloodbugMode
@@ -13,7 +15,7 @@ namespace BloodbugMode
     {
         public const string Guid = "senkodev.whiteknuckle.bloodbugmode";
         public const string Name = "BloodbugMode";
-        public const string Version = "1.0.5";
+        public const string Version = "1.0.6";
 
         internal static ManualLogSource Log;
 
@@ -40,7 +42,19 @@ namespace BloodbugMode
 
             // SceneManager.sceneLoaded += OnSceneLoaded;
 
-            new Harmony(Guid).PatchAll();
+            var harmony = new Harmony(Guid);
+            foreach (Type type in AccessTools.GetTypesFromAssembly(Assembly.GetExecutingAssembly()))
+            {
+                if (type.GetCustomAttributes(typeof(HarmonyPatch), true).Length == 0) continue;
+                try
+                {
+                    harmony.CreateClassProcessor(type).Patch();
+                }
+                catch (Exception e)
+                {
+                    Log.LogError($"Patch {type.Name} could not be applied. Was there a game update? Error: {e.Message}");
+                }
+            }
             BloodbugContent.Register();
             Log.LogInfo($"{Name} {Version} loaded");
         }
