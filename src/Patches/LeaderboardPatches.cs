@@ -1,3 +1,5 @@
+using System.Reflection;
+using System.Threading.Tasks;
 using HarmonyLib;
 
 namespace BloodbugMode
@@ -47,6 +49,23 @@ namespace BloodbugMode
                 || WorldLoader.customSeed
                 || !CL_GameManager.gMan.allowScores
                 || !gamemode.allowLeaderboardScoring;
+        }
+    }
+
+    [HarmonyPatch]
+    internal static class PlaceScorePatch
+    {
+        private static MethodBase TargetMethod()
+        {
+            return typeof(SteamManager).GetNestedType("SteamLeaderboardApi", BindingFlags.NonPublic).GetMethod("PlaceScore");
+        }
+
+        private static bool Prefix(ref Task<(bool scoreChanged, Task detailsUploadFinished)> __result)
+        {
+            if (!Leaderboards.IsBloodbugRun) return true;
+            Plugin.Log.LogInfo("Bloodbug mode run, leaderboard upload was skipped");
+            __result = Task.FromResult((false, Task.CompletedTask));
+            return false;
         }
     }
 
