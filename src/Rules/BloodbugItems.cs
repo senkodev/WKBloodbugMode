@@ -21,6 +21,8 @@ namespace BloodbugMode
 
         public static bool IsPiton(Item item) => IsKind(item, "piton");
 
+        public static bool PitonsBanned(ENT_Player player) => !Plugin.AllowPitonsAndRebar.Value && BloodbugController.IsBloodbug(player);
+
         public static bool IsHammer(Item item) => IsKind(item, "hammer");
 
         // allow spawned in hammers

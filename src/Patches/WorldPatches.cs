@@ -85,7 +85,7 @@ namespace BloodbugMode
     {
         private static bool Prefix()
         {
-            return !BloodbugController.IsBloodbug(ENT_Player.playerObject);
+            return Plugin.AllowComputers.Value || !BloodbugController.IsBloodbug(ENT_Player.playerObject);
         }
     }
 }

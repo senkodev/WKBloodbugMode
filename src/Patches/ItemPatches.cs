@@ -31,7 +31,7 @@ namespace BloodbugMode
         private static bool Prefix(HandItem_Shoot __instance)
         {
             bool blocked = (BloodbugItems.IsRebar(__instance.item) || BloodbugItems.IsPiton(__instance.item))
-                && BloodbugController.IsBloodbug(__instance.hand.GetPlayer());
+                && BloodbugItems.PitonsBanned(__instance.hand.GetPlayer());
             if (blocked)
             {
                 BloodbugItems.Refuse(__instance);
@@ -45,7 +45,7 @@ namespace BloodbugMode
     {
         private static bool Prefix(HandItem_Piton __instance)
         {
-            bool blocked = BloodbugController.IsBloodbug(__instance.hand.GetPlayer());
+            bool blocked = BloodbugItems.PitonsBanned(__instance.hand.GetPlayer());
             if (blocked)
             {
                 BloodbugItems.Refuse(__instance);
@@ -59,7 +59,7 @@ namespace BloodbugMode
     {
         private static bool Prefix(HandItem_Piton __instance)
         {
-            return !BloodbugController.IsBloodbug(__instance.hand.GetPlayer());
+            return !BloodbugItems.PitonsBanned(__instance.hand.GetPlayer());
         }
     }
 
@@ -73,7 +73,7 @@ namespace BloodbugMode
             ENT_Player player = ENT_Player.playerObject;
             if (!BloodbugController.IsBloodbug(player)) return;
 
-            float scale = BloodbugItems.IsRebar(item) ? 0f : Balance.ThrowStrength;
+            float scale = BloodbugItems.IsRebar(item) && !Plugin.AllowPitonsAndRebar.Value ? 0f : Balance.ThrowStrength;
             __state = item.dropVel;
             item.dropVel = BloodbugItems.ScaledDropVel(item.dropVel, scale);
         }

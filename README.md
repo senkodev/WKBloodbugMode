@@ -57,9 +57,9 @@ Additionally the Mother treats you as a relative, the same way she does in Roach
 
 Additionally you can't:
 - Use hammers. You start without one and can't pick one up
-- Throw rebar
-- Place pitons of any kind
-- Use computers
+- Throw rebar (can be allowed with `AllowPitonsAndRebar`)
+- Place pitons of any kind (can be allowed with `AllowPitonsAndRebar`)
+- Use computers (can be allowed with `AllowComputers`)
 - Stay underwater for more than 10 seconds
 
 Levers, cranks, buttons, vending machines and the roach trader will still work. If you grab a lever or a crank while flying, you will hang onto it so you don't drift away.
@@ -86,6 +86,8 @@ The bite key is `V` by default. If you change it to a key the game already uses 
 
 `AllowClimbing` is on by default. Turn it off and handholds won't be grabbable anymore, you will be able to fly and land on surfaces only.
 
+`AllowPitonsAndRebar` and `AllowComputers` are off by default. Turn them on to place pitons and throw rebar, or to use computers again.
+
 You can also get the perk in the middle of a run with the console command `addperk Perk_Senkodev_BloodbugForm`.
 
 ## Building
@@ -100,10 +102,12 @@ This also copies the mod into your r2modman profile. If your game and/or profile
 
 `tools/package.ps1` makes the zip package for the Thunderstore listing.
 
-## Credits
+## Dedicated to
 
 This mod is dedicated to **Sckurge**, who you can find on [Twitch](https://www.twitch.tv/sckurge) and [YouTube](https://www.youtube.com/@SckurgeWK)!
 You can also find his playthrough of the mod on [YouTube](https://www.youtube.com/watch?v=xTYvCStfkWo) :)
+
+## Credits
 
 - Dark Machine Games for White Knuckle
 - CiCi for the [Trinket & Binding Framework](https://thunderstore.io/c/white-knuckle/p/CiCisMods/CiCisTrinketAndBindingFramework/), which the mod used to run on

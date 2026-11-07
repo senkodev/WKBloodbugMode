@@ -54,3 +54,7 @@
 - Fixed the mod not working after the Shortcuts and Halloween updates
 - A game update removing a method the mod patches now only disables that one patch instead of the whole mod, with an error in the log saying which patch failed
 - Added a second patch to avoid leaderboard uploads, just in case this gets updated in the game again
+
+## 1.0.7
+- Fixed the hostile drone still being drinkable
+- Added the `AllowPitonsAndRebar` and `AllowComputers` settings (both are off by default)

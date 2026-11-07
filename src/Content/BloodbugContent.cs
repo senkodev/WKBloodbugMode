@@ -73,8 +73,14 @@ namespace BloodbugMode
         public static void ApplyBiteKey()
         {
             string key = Plugin.BiteKey.Value.ToString();
-            string banned = Plugin.AllowClimbing.Value ? "hammers, pitons, rebars or computers" : "hammers, pitons, rebars, handholds or computers";
-            Perk.description = $"(+) You can fly and rest on walls and ceilings.\n(+) Press {key} to charge at a denizen, hold {key} to feed on it.\n(+) Bloodbugs leave you alone.\n(-) You are short-sighted, color blind and hard of hearing.\n(-) You are small, slow on foot and crashing into things hurts.\n(-) No using {banned}.";
+            var banned = new List<string> { "hammers" };
+            if (!Plugin.AllowPitonsAndRebar.Value) banned.AddRange(new[] { "pitons", "rebars" });
+            if (!Plugin.AllowClimbing.Value) banned.Add("handholds");
+            if (!Plugin.AllowComputers.Value) banned.Add("computers");
+            string last = banned[banned.Count - 1];
+            banned.RemoveAt(banned.Count - 1);
+            string bannedText = banned.Count > 0 ? string.Join(", ", banned) + " or " + last : last;
+            Perk.description = $"(+) You can fly and rest on walls and ceilings.\n(+) Press {key} to charge at a denizen, hold {key} to feed on it.\n(+) Bloodbugs leave you alone.\n(-) You are short-sighted, color blind and hard of hearing.\n(-) You are small, slow on foot and crashing into things hurts.\n(-) No using {bannedText}.";
 
             ENT_Player player = ENT_Player.playerObject;
             Perk held = player != null ? player.GetPerk(PerkId) : null;
