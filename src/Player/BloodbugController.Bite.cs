@@ -51,7 +51,7 @@ namespace BloodbugMode
         internal float BloodLeft(GameEntity entity)
         {
             // drones and turrets can't be eaten :D
-            if (entity is DEN_Drone || entity is DEN_Turret || entity is DEN_GantryTurret) return 0f;
+            if (entity is DEN_Drone || entity is DEN_Turret || entity is DEN_GantryTurret || entity.GetTagger().HasTag("Drone")) return 0f;
             return bloodLeft.TryGetValue(entity.GetInstanceID(), out float left) ? left : Balance.BloodPerDenizen;
         }
 
